@@ -1,10 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class Bat extends GameObject implements MouseListener {
+public class Bat extends GameObject {
 	int speed;
+	public int MoveX = 100;
+	public int MoveY = 100;
 
 	public Bat() {
 		super();
@@ -23,37 +23,19 @@ public class Bat extends GameObject implements MouseListener {
 	void draw(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(x, y, width, height);
-	}
+		if (x != MoveX || y != MoveY) {
+			if (x < MoveX) {
+				x++;
+			} else {
+				x--;
+			}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e.getX());
-		System.out.println(e.getY());
+			if (y < MoveY) {
+				y++;
+			} else {
+				y--;
+			}
 
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		}
 	}
 }

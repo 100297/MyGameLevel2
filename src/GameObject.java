@@ -18,6 +18,6 @@ public class GameObject {
 	}
 
 	GameObject() {
-		collisionBox = new Rectangle(x, y , width, height);
+		collisionBox = new Rectangle(x, y, width, height);
 	}
 }
