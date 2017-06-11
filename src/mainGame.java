@@ -13,12 +13,15 @@ public class mainGame {
 	}
 
 	void setupGame() {
+		System.out.println("s");
 		base = new JFrame();
 		pan = new GamePanel();
 		base.add(pan);
 		base.setSize(fwidth, fheight);
 		base.setVisible(true);
 		base.setDefaultCloseOperation(2);
+		base.addMouseListener(pan);
 		pan.startGame();
+
 	}
 }

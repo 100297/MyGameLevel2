@@ -29,7 +29,6 @@ public class Bat extends GameObject {
 			} else {
 				x--;
 			}
-
 			if (y < MoveY) {
 				y++;
 			} else {

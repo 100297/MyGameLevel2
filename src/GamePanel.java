@@ -45,14 +45,15 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		play.MoveX = e.getX();
-		play.MoveY = e.getY();
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		play.MoveX = e.getX();
+		play.MoveY = e.getY();
+		System.out.println("done");
 	}
 
 	@Override
