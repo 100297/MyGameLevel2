@@ -24,17 +24,20 @@ public class Bat extends GameObject {
 		g.setColor(Color.BLACK);
 		g.fillRect(x, y, width, height);
 		if (x != MoveX || y != MoveY) {
-			if (x < MoveX) {
-				x++;
-			} else {
-				x--;
+			if (x < MoveX && Math.abs(MoveX- x ) >= speed) {
+				x+= speed;
+			} else  if(Math.abs(MoveX- x ) >= speed){
+				x-= speed;
 			}
-			if (y < MoveY) {
-				y++;
-			} else {
-				y--;
+			if (y < MoveY && MoveY - y >= Math.abs(speed)) {
+				y+= speed;
+				System.out.println("Move UP");
+			} else if(Math.abs(MoveY - y) >= speed){
+				y-= speed;
+				System.out.println("Move UP");
 			}
-
+				
+			
 		}
 	}
 }
