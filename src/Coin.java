@@ -1,11 +1,11 @@
 import java.awt.Color; 
 import java.awt.Graphics;
 
-public class Pipe extends GameObject{
+public class Coin extends GameObject{
 	int position;
-	public Pipe() {
-	x= 900;
-	y= 620;
+	public Coin() {
+	x= 300;
+	y= 200;
 	width = 100;
 	height = 350;
 }
@@ -14,7 +14,7 @@ public class Pipe extends GameObject{
 		super.update();
 	}
 	void draw( Graphics g){
-		g.fillRect(x, y, width, height);
+		g.fillOval(x, y, width, height);
 		 x -=6;
 	}
-}
+}                

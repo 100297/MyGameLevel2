@@ -12,16 +12,22 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	Bat play;
 	Timer time;
+	Pipe pipe;
+	Pipe pipe2;
+	Pipe pipe3;
+	Pipe pipe4;
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
 	public GamePanel() {
 		time = new Timer(1000 / 60, this);
 		play = new Bat();
+		pipe = new Pipe();
 		objectList.add(play);
+		objectList.add(pipe);
 	}
 
 	void startGame() {
 		time.start();
-		objectList.add(Pipe());
+		
 	}
 
 	void drawGamePanel() {
@@ -39,6 +45,7 @@ for(int i=0; i< objectList.size(); i++){
 	o.draw(g);
 
 }
+	
 	}
 
 	@Override

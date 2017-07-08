@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Bat extends GameObject {
+	boolean isdead = false;
 	int speed;
 	public int MoveX = 100;
 	public int MoveY = 100;
@@ -39,5 +40,6 @@ public class Bat extends GameObject {
 				
 			
 		}
+	
 	}
 }
