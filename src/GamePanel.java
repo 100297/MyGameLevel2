@@ -16,18 +16,28 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	Pipe pipe2;
 	Pipe pipe3;
 	Pipe pipe4;
+	Respawn Respawn;
+	public Boolean isDead;
+	Boolean Pipe2Spawned;
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
+	
+
 	public GamePanel() {
 		time = new Timer(1000 / 60, this);
 		play = new Bat();
 		pipe = new Pipe();
+		pipe2 = new Pipe();
 		objectList.add(play);
 		objectList.add(pipe);
+		
+		
+		
 	}
 
 	void startGame() {
 		time.start();
-		
+		isDead = false;
+		Pipe2Spawned = false;
 	}
 
 	void drawGamePanel() {
@@ -39,20 +49,34 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	public void paintComponent(Graphics g) {
-	//	play.draw(g);
-for(int i=0; i< objectList.size(); i++){
-	GameObject o = objectList.get(i);
-	o.draw(g);
-
-}
-	
+		// play.draw(g);
+		
+		g.drawString("" + play.score, 500, 300);
+		if (isDead == false) {
+			for (int i = 0; i < objectList.size(); i++) {
+				GameObject o = objectList.get(i);
+				o.draw(g);
+			}
+			
+		} else {
+			g.drawString("You have lost", 500, 450);
+			Respawn Respawn = new Respawn();
+			Respawn.draw(g);
+		}
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		// TODO Auto-generated method stub
+		update();
 		repaint();
+		
+		if (play.collisionBox.intersects(pipe.collisionBox) || play.collisionBox.intersects(pipe2.collisionBox)) {
+			isDead = true;
 
+		}
 	}
 
 	@Override
@@ -67,6 +91,10 @@ for(int i=0; i< objectList.size(); i++){
 		play.MoveX = e.getX();
 		play.MoveY = e.getY();
 		System.out.println("done");
+		if(e.getSource() == Respawn ) {
+			isDead = false;
+			play.score = 0;
+		}
 	}
 
 	@Override
@@ -98,4 +126,19 @@ for(int i=0; i< objectList.size(); i++){
 		// TODO Auto-generated method stub
 
 	}
+public void update() {
+	if (isDead == false) {
+		for (int i = 0; i < objectList.size(); i++) {
+			GameObject o = objectList.get(i);
+			o.update();
+		}
+
+	} 
+
+	if (pipe.x <= 500 && Pipe2Spawned == false) {
+		objectList.add(new Pipe());
+		Pipe2Spawned = true;
+	}
 }
+}
+
