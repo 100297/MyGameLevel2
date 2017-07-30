@@ -20,7 +20,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	public Boolean isDead;
 	Boolean Pipe2Spawned;
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
-	
 
 	public GamePanel() {
 		time = new Timer(1000 / 60, this);
@@ -29,15 +28,19 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		pipe2 = new Pipe();
 		objectList.add(play);
 		objectList.add(pipe);
-		
-		
-		
+
 	}
 
 	void startGame() {
 		time.start();
 		isDead = false;
 		Pipe2Spawned = false;
+	}
+
+	void startGame2() {
+		time.start();
+		isDead = false;
+
 	}
 
 	void drawGamePanel() {
@@ -50,30 +53,35 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 	public void paintComponent(Graphics g) {
 		// play.draw(g);
-		
+
 		g.drawString("" + play.score, 500, 300);
 		if (isDead == false) {
 			for (int i = 0; i < objectList.size(); i++) {
 				GameObject o = objectList.get(i);
 				o.draw(g);
 			}
-			
+
 		} else {
 			g.drawString("You have lost", 500, 450);
 			Respawn Respawn = new Respawn();
 			Respawn.draw(g);
 		}
-		
 	}
+  
+                   
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		// TODO Auto-generated method stub
 		update();
 		repaint();
-		
-		if (play.collisionBox.intersects(pipe.collisionBox) || play.collisionBox.intersects(pipe2.collisionBox)) {
+
+		if (play.collisionBox.intersects(pipe2.collisionBox)) {
+			isDead = true;
+
+		}
+		if (play.collisionBox.intersects(pipe.collisionBox)) {
 			isDead = true;
 
 		}
@@ -91,9 +99,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		play.MoveX = e.getX();
 		play.MoveY = e.getY();
 		System.out.println("done");
-		if(e.getSource() == Respawn ) {
-			isDead = false;
-			play.score = 0;
+		System.out.println(e.());
+		if (isDead) {
+			Respawn();
+			
 		}
 	}
 
@@ -126,19 +135,26 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 
 	}
-public void update() {
-	if (isDead == false) {
-		for (int i = 0; i < objectList.size(); i++) {
-			GameObject o = objectList.get(i);
-			o.update();
+
+	public void Respawn() {
+		isDead = false;
+		startGame2();
+
+	}
+
+	public void update() {
+		if (isDead == false) {
+			for (int i = 0; i < objectList.size(); i++) {
+				GameObject o = objectList.get(i);
+				o.update();
+			}
+
 		}
 
-	} 
+		if (pipe.x <= 500 && Pipe2Spawned == false) {
+			objectList.add(new Pipe());
+			Pipe2Spawned = true;
+		}
 
-	if (pipe.x <= 500 && Pipe2Spawned == false) {
-		objectList.add(new Pipe());
-		Pipe2Spawned = true;
 	}
 }
-}
-

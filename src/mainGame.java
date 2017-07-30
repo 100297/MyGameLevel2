@@ -13,7 +13,7 @@ public class mainGame {
 	}
 
 	void setupGame() {
-		System.out.println("s");
+		
 		base = new JFrame();
 		pan = new GamePanel();
 		base.add(pan);
