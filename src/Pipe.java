@@ -16,13 +16,15 @@ public class Pipe extends GameObject{
 		
 		super.update();
 		 x -=9;
-		 collisionBox.setBounds(x, y, width, height);
+		
 		 System.out.println(x);
 		 if(x + 100 <= 0) {
 			 x = 1000;
 			 Random ran = new Random();
 			 y = ran.nextInt(650);
+		 
 		 }
+		 collisionBox.setBounds(x, y, width, height);
 	}
 	void draw( Graphics g){
 		g.setColor(Color.GREEN);

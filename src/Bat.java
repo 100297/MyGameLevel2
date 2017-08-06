@@ -6,7 +6,8 @@ public class Bat extends GameObject {
 	int speed;
 	public int MoveX = 100;
 	public int MoveY = 100;
-	int score;
+	public int score;
+	
 	public Bat() {
 		super();
 		x = 100;
