@@ -24,17 +24,19 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	Respawn Respawn;
 	public Boolean isDead;
 	Boolean Pipe2Spawned;
+	ArrayList<Coin> CoinobjectList = new ArrayList<Coin>();
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
 	public static BufferedImage CoinImg;
+
 	public GamePanel() {
-		time = new Timer(1000 / 60, this);
 		play = new Bat();
-		pipe = new Pipe();
+		time = new Timer(1000 / 60, this);
+				pipe = new Pipe();
 		coinSpawn = 0;
 		pipe2 = new Pipe();
 		objectList.add(play);
 		objectList.add(pipe);
-		
+
 		try {
 			CoinImg = ImageIO.read(this.getClass().getResourceAsStream("ZachCoin.png"));
 		} catch (IOException e) {
@@ -44,16 +46,17 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	void startGame() {
+		
 		time.start();
 		isDead = false;
 		Pipe2Spawned = false;
-		objectList.add(new Coin());
+		CoinobjectList.add(new Coin());
 	}
 
 	void startGame2() {
 		time.start();
 		isDead = false;
-		
+
 	}
 
 	void drawGamePanel() {
@@ -66,9 +69,21 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 	public void paintComponent(Graphics g) {
 		// play.draw(g);
+		
+			for (Coin c  :  CoinobjectList) {			
+				if(c!=null) {
+					c.draw(g);
+				}
 			
-			
-			g.drawString("" + play.score, 500, 300);
+			}
+		
+
+
+		if (coinSpawn % 180 == 0) {
+			CoinobjectList.add(new Coin());
+		}
+
+		g.drawString("" + play.score, 500, 300);
 		if (isDead == false) {
 			for (int i = 0; i < objectList.size(); i++) {
 				GameObject o = objectList.get(i);
@@ -82,14 +97,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		}
 		if (play.collisionBox.intersects(pipe2.collisionBox)) {
 			isDead = true;
-				
+
 		}
 		if (play.collisionBox.intersects(pipe.collisionBox)) {
 			isDead = true;
-			
+
 		}
 		coinSpawn += 1;
-		
+
 	}
 
 	@Override
@@ -98,17 +113,20 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 		update();
 		repaint();
-		if(coinSpawn%180 == 0) {
-			objectList.add(new Coin());
-			}
-			for(int i = 0; i<objectList.size(); i++) {
-				Coin c = (Coin)objectList.get(i);
-				if(play.collisionBox.intersects(c.collisionBox)) {
-					 play.score += 3000;
-					 objectList.remove(c);
+		if (coinSpawn % 180 == 0) {
+			CoinobjectList.add(new Coin());
+		}
+	
+			for (Coin c : CoinobjectList) {
+			
+				if (coin != null && play.collisionBox.intersects(c.collisionBox)) {
+					System.out.println("Collided");
+					play.score += 3000;
+					CoinobjectList.remove(c);
 				}
-				
+
 			}
+
 	}
 
 	@Override
@@ -149,8 +167,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseDragged(MouseEvent e) {		
 
 	}
 
@@ -164,11 +181,17 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		play.x += 220;
 		play.score = 0;
 		isDead = false;
-		
+
 	}
 
 	public void update() {
 		if (isDead == false) {
+			for(Coin c : CoinobjectList){
+				if(c!=null) {
+					c.update();	
+				}
+				
+			}
 			for (int i = 0; i < objectList.size(); i++) {
 				GameObject o = objectList.get(i);
 				o.update();

@@ -23,5 +23,6 @@ public class Coin extends GameObject{
 	void draw( Graphics g){
 		g.drawImage(GamePanel.CoinImg,x, y, width, height, null); 
 		 x -=6;
+		 g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 }                

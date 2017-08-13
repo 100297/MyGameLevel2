@@ -17,7 +17,7 @@ public class Pipe extends GameObject{
 		super.update();
 		 x -=9;
 		
-		 System.out.println(x);
+		 
 		 if(x + 100 <= 0) {
 			 x = 1000;
 			 Random ran = new Random();
