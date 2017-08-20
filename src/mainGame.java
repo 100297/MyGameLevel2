@@ -22,7 +22,7 @@ public class mainGame {
 		base.setDefaultCloseOperation(2);
 		base.addMouseListener(pan);
 		pan.startGame();
-
+		base.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
   

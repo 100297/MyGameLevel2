@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	Respawn Respawn;
 	public Boolean isDead;
 	Boolean Pipe2Spawned;
+	Boolean inTitleScreen;
 	ArrayList<Coin> CoinobjectList = new ArrayList<Coin>();
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
 	public static BufferedImage CoinImg;
@@ -31,12 +32,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	public GamePanel() {
 		play = new Bat();
 		time = new Timer(1000 / 60, this);
-				pipe = new Pipe();
+		pipe = new Pipe();
 		coinSpawn = 0;
 		pipe2 = new Pipe();
 		objectList.add(play);
 		objectList.add(pipe);
-
+		inTitleScreen = true;
 		try {
 			CoinImg = ImageIO.read(this.getClass().getResourceAsStream("ZachCoin.png"));
 		} catch (IOException e) {
@@ -46,7 +47,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	void startGame() {
-		
+
 		time.start();
 		isDead = false;
 		Pipe2Spawned = false;
@@ -69,64 +70,75 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 	public void paintComponent(Graphics g) {
 		// play.draw(g);
-		
-			for (Coin c  :  CoinobjectList) {			
-				if(c!=null) {
-					c.draw(g);
-				}
-			
-			}
-		
-
-
-		if (coinSpawn % 180 == 0) {
-			CoinobjectList.add(new Coin());
-		}
-
-		g.drawString("" + play.score, 500, 300);
-		if (isDead == false) {
-			for (int i = 0; i < objectList.size(); i++) {
-				GameObject o = objectList.get(i);
-				o.draw(g);
-			}
+		if (inTitleScreen) {
+			g.drawString("Use your mouse to control your player, Click to move", 50, 350);
+			g.drawRect(50, 500, 200, 50);
+			g.drawString("Click to Play", 100, 525);
 
 		} else {
-			g.drawString("You have lost", 500, 450);
-			Respawn Respawn = new Respawn();
-			Respawn.draw(g);
-		}
-		if (play.collisionBox.intersects(pipe2.collisionBox)) {
-			isDead = true;
+			for (Coin c : CoinobjectList) {
+				if (c != null) {
+					c.draw(g);
+				}
+
+			}
+
+			if (coinSpawn % 180 == 0) {
+				CoinobjectList.add(new Coin());
+			}
+
+			g.drawString("" + play.score, 500, 300);
+			if (isDead == false) {
+				for (int i = 0; i < objectList.size(); i++) {
+					GameObject o = objectList.get(i);
+					o.draw(g);
+				}
+
+			} else {
+				g.drawString("You have lost", 500, 450);
+				Respawn Respawn = new Respawn();
+				Respawn.draw(g);
+			}
+			if (play.collisionBox.intersects(pipe2.collisionBox)) {
+				isDead = true;
+
+			}
+			if (play.collisionBox.intersects(pipe.collisionBox)) {
+				isDead = true;
+
+			}
+			coinSpawn += 1;
 
 		}
-		if (play.collisionBox.intersects(pipe.collisionBox)) {
-			isDead = true;
-
-		}
-		coinSpawn += 1;
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		// TODO Auto-generated method stub
+
 		update();
 		repaint();
-		if (coinSpawn % 180 == 0) {
-			CoinobjectList.add(new Coin());
+		if (!inTitleScreen) {
+			if (coinSpawn % 180 == 0) {
+				CoinobjectList.add(new Coin());
+			}
 		}
-	
-			for (Coin c : CoinobjectList) {
-			
-				if (coin != null && play.collisionBox.intersects(c.collisionBox)) {
-					System.out.println("Collided");
-					play.score += 3000;
-					CoinobjectList.remove(c);
-				}
+		for (Coin c : CoinobjectList) {
 
+			if (c != null && play.collisionBox.intersects(c.collisionBox)) {
+				System.out.println("Collided");
+				play.score += 3000;
+				c.isAlive = false;
 			}
 
+		}
+		for (int i = 0; i < CoinobjectList.size(); i++) {
+			Coin c = CoinobjectList.get(i);
+			if (c != null && c.isAlive == false) {
+				CoinobjectList.remove(c);
+			}
+		}
 	}
 
 	@Override
@@ -140,11 +152,16 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 		play.MoveX = e.getX();
 		play.MoveY = e.getY();
-		System.out.println("done");
 
-		if (isDead) {
+		if (isDead && e.getX() < 700 && e.getX() > 500 && e.getY() < 950 && e.getY() > 750) {
+			System.out.println("Should Respawn");
 			Respawn();
 
+		}
+		if (e.getX() > 250 && e.getX() > 50 && e.getY() > 550 && e.getY() < 500)
+			;
+		{
+			inTitleScreen = false;
 		}
 	}
 
@@ -167,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {		
+	public void mouseDragged(MouseEvent e) {
 
 	}
 
@@ -181,16 +198,17 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		play.x += 220;
 		play.score = 0;
 		isDead = false;
-
+		pipe.speed = 16;
+		pipe2.speed = 16;
 	}
 
 	public void update() {
 		if (isDead == false) {
-			for(Coin c : CoinobjectList){
-				if(c!=null) {
-					c.update();	
+			for (Coin c : CoinobjectList) {
+				if (c != null) {
+					c.update();
 				}
-				
+
 			}
 			for (int i = 0; i < objectList.size(); i++) {
 				GameObject o = objectList.get(i);

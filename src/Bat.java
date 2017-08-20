@@ -14,8 +14,9 @@ public class Bat extends GameObject {
 		y = 100;
 		width = 50;
 		height = 50;
-		speed = 5;
+		speed = 15;
 		score = 0;
+		
 	}
 
 	void update() {
@@ -44,6 +45,7 @@ public class Bat extends GameObject {
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.RED);
 		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
+	
 	}
 
 }

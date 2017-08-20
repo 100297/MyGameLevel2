@@ -18,5 +18,6 @@ void draw(Graphics g ) {
 	g.fillRect(x, y, width, height);
 	g.setColor(Color.YELLOW);
 	g.drawString("Respawn", 550, 770);
+
 }
 }
