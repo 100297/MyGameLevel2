@@ -1,6 +1,9 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.JFrame;
 
-public class mainGame {
+public class mainGame extends JFrame {
 	final static int fwidth = 1000;
 	final static int fheight = 900;
 	JFrame base;
@@ -13,7 +16,6 @@ public class mainGame {
 	}
 
 	void setupGame() {
-		
 		base = new JFrame();
 		pan = new GamePanel();
 		base.add(pan);

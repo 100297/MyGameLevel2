@@ -23,8 +23,8 @@ public class Pipe extends GameObject{
 		 if(x + 100 <= 0) {
 			 x = 1000;
 			 Random ran = new Random();
-			 y = ran.nextInt(650);
-		 speed++;
+	 y = ran.nextInt(650);
+		 speed+= 1;
 		 System.out.println(speed + "");
 		 }
 		 collisionBox.setBounds(x, y, width, height);

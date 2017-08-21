@@ -12,9 +12,9 @@ public class Bat extends GameObject {
 		super();
 		x = 100;
 		y = 100;
-		width = 50;
+		width = 100;
 		height = 50;
-		speed = 15;
+		speed = 23;
 		score = 0;
 		
 	}
@@ -42,9 +42,8 @@ public class Bat extends GameObject {
 
 	void draw(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.fillRect(x, y, width, height);
-		g.setColor(Color.RED);
-		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
+		g.drawImage(GamePanel.BatImg,x, y, width, height, null); 
+		
 	
 	}
 

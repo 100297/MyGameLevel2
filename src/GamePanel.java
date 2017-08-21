@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +26,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	public Boolean isDead;
 	Boolean Pipe2Spawned;
 	Boolean inTitleScreen;
+	int highScore;
 	ArrayList<Coin> CoinobjectList = new ArrayList<Coin>();
 	ArrayList<GameObject> objectList = new ArrayList<GameObject>();
 	public static BufferedImage CoinImg;
-
+	public static BufferedImage BatImg;
+	
 	public GamePanel() {
+		highScore = 0;
 		play = new Bat();
 		time = new Timer(1000 / 60, this);
 		pipe = new Pipe();
@@ -40,6 +44,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		inTitleScreen = true;
 		try {
 			CoinImg = ImageIO.read(this.getClass().getResourceAsStream("ZachCoin.png"));
+			BatImg = ImageIO.read(this.getClass().getResourceAsStream("images.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,6 +75,13 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 	public void paintComponent(Graphics g) {
 		// play.draw(g);
+
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 1000, 900);
+		g.setColor(Color.BLACK);
+		if (play.score > highScore) {
+			highScore = play.score;
+		}
 		if (inTitleScreen) {
 			g.drawString("Use your mouse to control your player, Click to move", 50, 350);
 			g.drawRect(50, 500, 200, 50);
@@ -87,7 +99,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 				CoinobjectList.add(new Coin());
 			}
 
-			g.drawString("" + play.score, 500, 300);
+			g.drawString("Score: " + play.score, 500, 300);
+			if (isDead) {
+				g.drawString("High Score: " + highScore, 500, 120);
+			}
 			if (isDead == false) {
 				for (int i = 0; i < objectList.size(); i++) {
 					GameObject o = objectList.get(i);
@@ -98,6 +113,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 				g.drawString("You have lost", 500, 450);
 				Respawn Respawn = new Respawn();
 				Respawn.draw(g);
+
 			}
 			if (play.collisionBox.intersects(pipe2.collisionBox)) {
 				isDead = true;
@@ -111,7 +127,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 		}
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -158,10 +173,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			Respawn();
 
 		}
-		if (e.getX() > 250 && e.getX() > 50 && e.getY() > 550 && e.getY() < 500)
-			;
+		if (e.getX() < 250 && e.getX() > 50 && e.getY() < 550 && e.getY() > 500)
+		
 		{
 			inTitleScreen = false;
+			System.out.println("End Title Screen");
+			System.out.println(e.getY());
 		}
 	}
 
