@@ -165,8 +165,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		play.MoveX = e.getX();
-		play.MoveY = e.getY();
+		play.MoveX = e.getX() -40;
+		play.MoveY = e.getY() -40;
 
 		if (isDead && e.getX() < 700 && e.getX() > 500 && e.getY() < 950 && e.getY() > 750) {
 			System.out.println("Should Respawn");
